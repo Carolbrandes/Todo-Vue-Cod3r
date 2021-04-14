@@ -1,45 +1,43 @@
 <template>
-  <div class="add-todo">
-    <input type="text" v-model="todo" placeholder="label" />
-    <slot name="button"></slot>
-  </div>
+  <section class="add-todo container">
+    <input
+      class="input"
+      type="text"
+      placeholder="Nova tarefa"
+      v-model="newTask"
+    />
+
+    <button class="button" @click="addTask">Adicionar</button>
+  </section>
 </template>
 
 <script>
 export default {
-  props: ["todo", "label"],
+  computed: {
+    newTask: {
+      get() {
+        return this.$store.state.newTodo;
+      },
+
+      set(value) {
+        this.$store.commit("SET_NEW_TODO", value);
+      },
+    },
+  },
+
+  methods: {
+    addTask() {
+      this.$store.commit("ADD_NEW_TODO", this.$store.state.newTodo);
+      this.$store.state.newTodo = "";
+    },
+  },
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .add-todo {
   padding: 3rem 0;
-  width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-
-  input {
-    border: 1px solid #055ee4;
-    border-radius: 10px;
-    padding-left: 15px;
-    width: 400px;
-    height: 50px;
-    outline: none;
-    margin-right: 1rem;
-
-    &::placeholder {
-      color: #055ee4;
-    }
-  }
-
-  button {
-    outline: none;
-    border-radius: 10px;
-    height: 50px;
-    border: none;
-    background-color: #db6f27;
-    color: #fff;
-    padding: 1rem;
-  }
+  display: flex;
+  justify-content: center;
 }
 </style>

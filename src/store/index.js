@@ -8,6 +8,7 @@ export default new Vuex.Store({
     newTodo: "",
     todosList: [],
     selectedTodo: "",
+    modalEdit: false,
   },
   mutations: {
     SET_NEW_TODO(state, payload) {
@@ -16,6 +17,10 @@ export default new Vuex.Store({
 
     ADD_NEW_TODO(state, payload) {
       state.todosList.unshift(payload);
+    },
+
+    EDIT_TODO(state, payload) {
+      state.todosList[payload.index] = payload.value;
     },
 
     SET_SELECTED_TODO(state, payload) {

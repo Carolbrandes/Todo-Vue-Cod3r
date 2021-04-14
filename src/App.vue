@@ -1,50 +1,17 @@
 <template>
   <div>
     <Header />
-
-    <div class="container">
-      <AddTodo :todo="todo" label="Adicionar Tarefa">
-        <button slot="button" type="button" @click="addTodo">Adicionar</button>
-      </AddTodo>
-
-      <Todos />
-    </div>
+    <AddTodo />
+    <TodoList />
   </div>
 </template>
 
 <script>
 export default {
-  name: "App",
-
   components: {
     Header: () => import("@/components/Header.vue"),
     AddTodo: () => import("@/components/AddTodo.vue"),
-    Todos: () => import("@/components/Todos.vue"),
-  },
-
-  data: () => ({
-    //
-  }),
-
-  methods: {
-    addTodo() {
-      if (this.todo) {
-        this.$store.commit("ADD_NEW_TODO", this.todo);
-        this.todo = "";
-      }
-    },
-  },
-
-  computed: {
-    todo: {
-      get() {
-        return this.$store.state.newTodo;
-      },
-
-      set(value) {
-        this.$store.commit("SET_NEW_TODO", value);
-      },
-    },
+    TodoList: () => import("@/components/TodoList.vue"),
   },
 };
 </script>
@@ -53,15 +20,43 @@ export default {
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
 .container {
-  width: 1040px;
+  max-width: 1180px;
+  width: 95%;
   margin-left: auto;
   margin-right: auto;
+}
+
+.input {
+  border: 1px solid #a9bbe5;
+  outline: none;
+  border-radius: 30px;
+  width: 400px;
+  height: 50px;
+  color: #acb6e5;
+  padding-left: 20px;
+
+  &::placeholder {
+    color: #acb6e5;
+  }
+}
+
+.button {
+  background-color: #8092bd;
+  color: #fff;
+  border: none;
+  outline: none;
+  width: 150px;
+  height: 50px;
+  border-radius: 30px;
+  margin-left: 1rem;
 }
 </style>

@@ -1,28 +1,22 @@
 <template>
   <header>
     <div class="container">
-      <h1>TodoApp</h1>
+      <h1>Tasks</h1>
     </div>
   </header>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      tab: null,
-    };
-  },
-};
+export default {};
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 header {
-  background-color: #055ee4;
+  background: linear-gradient(to right, rgb(172, 182, 229), rgb(134, 253, 232));
   padding: 1rem 0;
 
   h1 {
-    color: #fff;
+    color: #333;
   }
 }
 </style>
