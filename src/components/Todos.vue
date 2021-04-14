@@ -18,7 +18,7 @@
           </td>
 
           <td>
-            <span>
+            <span @click="edit(todo)">
               <img src="@/assets/pencil.svg" alt="editar" />
             </span>
           </td>
@@ -37,11 +37,33 @@
         </tr>
       </tbody>
     </table>
+
+    <div v-show="modal">
+      <ModalEdition
+        :todo="$store.state.selectedTodo"
+        :label="$store.state.selectedTodo"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  components: {
+    ModalEdition: () => import("@/components/ModalEdition.vue"),
+  },
+
+  data: () => ({
+    modal: false,
+  }),
+
+  methods: {
+    edit(todo) {
+      this.modal = true;
+      this.$store.commit("SET_SELECTED_TODO", todo);
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">

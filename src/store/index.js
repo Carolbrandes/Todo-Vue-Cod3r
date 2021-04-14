@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     newTodo: "",
     todosList: [],
+    selectedTodo: "",
   },
   mutations: {
     SET_NEW_TODO(state, payload) {
@@ -15,6 +16,10 @@ export default new Vuex.Store({
 
     ADD_NEW_TODO(state, payload) {
       state.todosList.unshift(payload);
+    },
+
+    SET_SELECTED_TODO(state, payload) {
+      state.selectedTodo = payload;
     },
   },
   actions: {},

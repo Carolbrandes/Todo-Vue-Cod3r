@@ -1,31 +1,13 @@
 <template>
   <div class="add-todo">
-    <input type="text" v-model="todo" placeholder="Adicionar Tarefa" />
-    <button type="button" @click="addTodo">Adicionar</button>
+    <input type="text" v-model="todo" placeholder="label" />
+    <slot name="button"></slot>
   </div>
 </template>
 
 <script>
 export default {
-  methods: {
-    addTodo() {
-      if (this.todo) {
-        this.$store.commit("ADD_NEW_TODO", this.todo);
-        this.todo = "";
-      }
-    },
-  },
-  computed: {
-    todo: {
-      get() {
-        return this.$store.state.newTodo;
-      },
-
-      set(value) {
-        this.$store.commit("SET_NEW_TODO", value);
-      },
-    },
-  },
+  props: ["todo", "label"],
 };
 </script>
 
