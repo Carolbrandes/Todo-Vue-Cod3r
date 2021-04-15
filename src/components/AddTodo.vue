@@ -29,7 +29,10 @@ export default {
 
   methods: {
     addTask() {
-      this.$store.dispatch("addTodo", this.$store.state.newTodo);
+      this.$store.commit("ADD_TODO", {
+        texto: this.$store.state.newTodo,
+        concluido: false,
+      });
       this.$store.state.newTodo = "";
       storeLocalStorage(this.$store.state.todosList);
     },

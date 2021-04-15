@@ -10,12 +10,14 @@
 
       <tbody v-if="$store.state.todosList.length > 0">
         <tr v-for="(task, index) in $store.state.todosList" :key="index">
-          <td :ref="task">{{ task }}</td>
+          <td :ref="task.texto" :class="task.concluido ? 'conclude' : ''">
+            {{ task.texto }}
+          </td>
           <td>
             <img
               src="@/assets/check.svg"
               alt="concluir"
-              class="task-conclude"
+              :class="task.concluido ? 'conclude-icon' : ''"
               @click="concludeTask(task)"
             />
           </td>
@@ -59,27 +61,27 @@ export default {
 
   methods: {
     editTask(task) {
-      this.$store.commit("SET_SELECTED_TODO", task);
+      this.$store.commit("SET_SELECTED_TODO", task.texto);
       this.$store.state.modalEdit = true;
     },
 
     concludeTask(task) {
-      const answer = confirm("Deseja realmente concluir essa tarefa?");
+      this.$store.commit("DELETE_TODO", this.getIndex(task));
+      this.$store.commit("ADD_TODO", { texto: task.texto, concluido: true });
+      storeLocalStorage(this.$store.state.todosList);
+    },
 
-      answer &&
-        this.$refs[task].forEach((td) => {
-          td.classList.add("conclude");
-          td.nextElementSibling.querySelector(".task-conclude").style.opacity =
-            "0.3";
-        }) &&
-        storeLocalStorage(this.$store.state.todosList);
+    getIndex(task) {
+      return this.$store.state.todosList.indexOf(task);
     },
 
     deleteTask(task) {
-      const answer = confirm("Deseja realmente excluir essa tarefa?");
-      answer &&
-        this.$store.dispatch("deleteTodo", task) &&
+      console.log("deletado");
+      const answer = confirm("Deseja realmente excluir a tarefa?");
+      if (answer) {
+        this.$store.commit("DELETE_TODO", this.getIndex(task));
         storeLocalStorage(this.$store.state.todosList);
+      }
     },
   },
 
@@ -120,6 +122,10 @@ table {
 
   .conclude {
     text-decoration: line-through;
+  }
+
+  .conclude-icon {
+    opacity: 0.3;
   }
 }
 </style>

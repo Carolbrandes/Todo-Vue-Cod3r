@@ -36,12 +36,20 @@ export default {
 
   methods: {
     edit() {
-      const index = this.$store.state.todosList.indexOf(this.oldValue);
-      this.$store.dispatch("editTodo", {
-        index,
-        value: this.$store.state.selectedTodo,
+      console.log("editar");
+      const index = this.$store.state.todosList.indexOf(
+        this.$store.state.todosList.find((t) => t.texto == this.oldValue)
+      );
+      const status = this.$store.state.todosList.find(
+        (t) => t.texto == this.oldValue
+      ).concluido;
+      console.log(index);
+      console.log(status);
+      this.$store.commit("DELETE_TODO", index);
+      this.$store.commit("ADD_TODO", {
+        texto: this.$store.state.selectedTodo,
+        concluido: status,
       });
-
       this.$store.state.modalEdit = false;
 
       storeLocalStorage(this.$store.state.todosList);
