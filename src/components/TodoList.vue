@@ -10,8 +10,14 @@
 
       <tbody v-if="$store.state.todosList.length > 0">
         <tr v-for="(task, index) in $store.state.todosList" :key="index">
-          <td>{{ task }}</td>
-          <td><img src="@/assets/check.svg" alt="concluir" /></td>
+          <td :ref="task">{{ task }}</td>
+          <td>
+            <img
+              src="@/assets/check.svg"
+              alt="concluir"
+              @click="concludeTask(task)"
+            />
+          </td>
           <td>
             <img
               src="@/assets/pencil.svg"
@@ -44,10 +50,15 @@ export default {
 
   methods: {
     editTask(task) {
-      console.log("edit task");
-      console.log(task);
       this.$store.commit("SET_SELECTED_TODO", task);
       this.$store.state.modalEdit = true;
+    },
+
+    concludeTask(task) {
+      const answer = confirm("Deseja realmente concluir essa tarefa?");
+      console.log(this.$refs[task].forEach((td) => console.log(td)));
+
+      answer && this.$refs[task].forEach((td) => td.classList.add("conclude"));
     },
   },
 };
@@ -79,6 +90,10 @@ table {
 
   .nenhuma-tarefa {
     text-align: center;
+  }
+
+  .conclude {
+    text-decoration: line-through;
   }
 }
 </style>
