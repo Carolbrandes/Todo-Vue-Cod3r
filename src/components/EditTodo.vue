@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import { storeLocalStorage } from "@/helpers.js";
+
 export default {
   data() {
     return {
@@ -35,12 +37,14 @@ export default {
   methods: {
     edit() {
       const index = this.$store.state.todosList.indexOf(this.oldValue);
-      this.$store.commit("EDIT_TODO", {
+      this.$store.dispatch("editTodo", {
         index,
         value: this.$store.state.selectedTodo,
       });
 
       this.$store.state.modalEdit = false;
+
+      storeLocalStorage(this.$store.state.todosList);
     },
   },
 

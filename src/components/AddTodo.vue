@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import { storeLocalStorage } from "@/helpers.js";
+
 export default {
   computed: {
     newTask: {
@@ -27,8 +29,9 @@ export default {
 
   methods: {
     addTask() {
-      this.$store.commit("ADD_NEW_TODO", this.$store.state.newTodo);
+      this.$store.dispatch("addTodo", this.$store.state.newTodo);
       this.$store.state.newTodo = "";
+      storeLocalStorage(this.$store.state.todosList);
     },
   },
 };

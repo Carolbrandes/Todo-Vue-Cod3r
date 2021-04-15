@@ -50,6 +50,8 @@
 </template>
 
 <script>
+import { storeLocalStorage } from "@/helpers.js";
+
 export default {
   components: {
     EditTodo: () => import("@/components/EditTodo.vue"),
@@ -69,17 +71,21 @@ export default {
           td.classList.add("conclude");
           td.nextElementSibling.querySelector(".task-conclude").style.opacity =
             "0.3";
-        });
+        }) &&
+        storeLocalStorage(this.$store.state.todosList);
     },
 
     deleteTask(task) {
       const answer = confirm("Deseja realmente excluir essa tarefa?");
       answer &&
-        this.$store.commit(
-          "DELETE_TODO",
-          this.$store.state.todosList.filter((todo) => todo !== task)
-        );
+        this.$store.dispatch("deleteTodo", task) &&
+        storeLocalStorage(this.$store.state.todosList);
     },
+  },
+
+  created() {
+    const taskExists = localStorage.getItem("tasks");
+    taskExists ? (this.$store.state.todosList = JSON.parse(taskExists)) : "";
   },
 };
 </script>
