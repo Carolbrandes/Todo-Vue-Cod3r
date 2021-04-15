@@ -15,6 +15,7 @@
             <img
               src="@/assets/check.svg"
               alt="concluir"
+              class="task-conclude"
               @click="concludeTask(task)"
             />
           </td>
@@ -58,7 +59,12 @@ export default {
       const answer = confirm("Deseja realmente concluir essa tarefa?");
       console.log(this.$refs[task].forEach((td) => console.log(td)));
 
-      answer && this.$refs[task].forEach((td) => td.classList.add("conclude"));
+      answer &&
+        this.$refs[task].forEach((td) => {
+          td.classList.add("conclude");
+          td.nextElementSibling.querySelector(".task-conclude").style.opacity =
+            "0.3";
+        });
     },
   },
 };
