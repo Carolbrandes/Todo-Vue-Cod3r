@@ -26,7 +26,13 @@
               @click="editTask(task)"
             />
           </td>
-          <td><img src="@/assets/remove.svg" alt="excluir" /></td>
+          <td>
+            <img
+              src="@/assets/remove.svg"
+              alt="excluir"
+              @click="deleteTask(task)"
+            />
+          </td>
         </tr>
       </tbody>
 
@@ -57,7 +63,6 @@ export default {
 
     concludeTask(task) {
       const answer = confirm("Deseja realmente concluir essa tarefa?");
-      console.log(this.$refs[task].forEach((td) => console.log(td)));
 
       answer &&
         this.$refs[task].forEach((td) => {
@@ -65,6 +70,15 @@ export default {
           td.nextElementSibling.querySelector(".task-conclude").style.opacity =
             "0.3";
         });
+    },
+
+    deleteTask(task) {
+      const answer = confirm("Deseja realmente excluir essa tarefa?");
+      answer &&
+        this.$store.commit(
+          "DELETE_TODO",
+          this.$store.state.todosList.filter((todo) => todo !== task)
+        );
     },
   },
 };

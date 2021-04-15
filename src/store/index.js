@@ -23,6 +23,10 @@ export default new Vuex.Store({
       state.todosList[payload.index] = payload.value;
     },
 
+    DELETE_TODO(state, payload) {
+      state.todosList = payload;
+    },
+
     SET_SELECTED_TODO(state, payload) {
       state.selectedTodo = payload;
     },
